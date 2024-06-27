@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductsList from './ProductsList';
 import ProductDetail from './ProductDetail';
 import { getCsrfToken } from './utils/csrf';
+import AddProduct from './AddProduct';
 
 const httpLink = createHttpLink({
   uri: 'http://127.0.0.1:8000/graphql/',
@@ -37,6 +38,7 @@ function App() {
           <Routes>
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/" element={<ProductsList />} />
+            <Route path="add-product" element={<AddProduct />} />
           </Routes>
         </div>
       </Router>

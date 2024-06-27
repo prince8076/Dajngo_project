@@ -18,5 +18,28 @@ class Query(graphene.ObjectType):
             return Product.objects.get(pk=int(id))
         except (Product.DoesNotExist, ValueError):
             return None
+        
 
-schema = graphene.Schema(query=Query)
+class CreateProduct(graphene.Mutation):
+    class Arguments:
+        name = graphene.String(required=True)
+        price = graphene.Float(required=True)
+        stock = graphene.Int(required=True)
+        description = graphene.String(required=True)
+
+    product = graphene.Field(ProductType)
+
+    @classmethod
+    def mutate(cls, root, info, name, price, stock, description):
+        product = Product.objects.create(
+            name=name,
+            price=price,
+            stock=stock,
+            description=description
+        )
+        return CreateProduct(product=product)
+
+class Mutation(graphene.ObjectType):
+    create_product = CreateProduct.Field()
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
