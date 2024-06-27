@@ -20,27 +20,47 @@ const ProductsList = () => {
     if (error) return <p>Error :( {error.message}</p>;
 
     return (
-        <table>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Stock</th>
+                    <th style={styles.tableHeader}>Name</th>
+                    <th style={styles.tableHeader}>Price</th>
+                    <th style={styles.tableHeader}>Stock</th>
                 </tr>
             </thead>
             <tbody>
                 {data.allProducts.map(({ id, name, price, stock }) => (
-                    <tr key={id}>
-                        <td>
-                            <Link to={`/product/${id}`}>{name}</Link>
+                    <tr key={id} style={styles.tableRow}>
+                        <td style={styles.tableCell}>
+                            <Link to={`/product/${id}`} style={styles.link}>{name}</Link>
                         </td>
-                        <td>{price}</td>
-                        <td>{stock}</td>
+                        <td style={styles.tableCell}>${price}</td>
+                        <td style={styles.tableCell}>{stock}</td>
                     </tr>
                 ))}
             </tbody>
         </table>
     );
+};
+
+const styles = {
+    tableHeader: {
+        backgroundColor: '#f2f2f2',
+        borderBottom: '1px solid #ddd',
+        padding: '8px',
+        textAlign: 'left',
+    },
+    tableRow: {
+        borderBottom: '1px solid #ddd',
+    },
+    tableCell: {
+        padding: '8px',
+        textAlign: 'left',
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'blue',
+    },
 };
 
 export default ProductsList;
